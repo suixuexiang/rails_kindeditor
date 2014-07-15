@@ -3110,7 +3110,7 @@ _extend(KCmd, {
     });
   },
   forecolor : function(val) {
-    return this.wrap('<font color="color:' + val + ';"></font>').select();
+    return this.wrap('<span style="color:' + val + ';"></span>').select();
   },
   hilitecolor : function(val) {
     return this.wrap('<span style="background-color:' + val + ';"></span>').select();
