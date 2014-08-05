@@ -10,6 +10,7 @@
 KindEditor.plugin('clearhtml', function(K) {
 	var self = this, name = 'clearhtml';
 	self.clickToolbar(name, function() {
+		alert('11111111');
 		self.focus();
 		var html = self.html();
 		html = html.replace(/(<script[^>]*>)([\s\S]*?)(<\/script>)/ig, '');
