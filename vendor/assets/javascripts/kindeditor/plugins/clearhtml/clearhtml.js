@@ -8,7 +8,6 @@
 *******************************************************************************/
 
 KindEditor.plugin('clearhtml', function(K) {
-	alert('11111111');
 	var self = this, name = 'clearhtml';
 	self.clickToolbar(name, function() {
 		self.focus();
@@ -16,9 +15,8 @@ KindEditor.plugin('clearhtml', function(K) {
 		html = html.replace(/(<script[^>]*>)([\s\S]*?)(<\/script>)/ig, '');
 		html = html.replace(/(<style[^>]*>)([\s\S]*?)(<\/style>)/ig, '');
 		html = K.formatHtml(html, {
-			a : ['href', 'target'],
 			embed : ['src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
-			img : ['src', 'width', 'height', 'border', 'alt', 'title'],
+			img : ['src', 'border', 'alt', 'title', '.width', '.height'],
 			table : ['border'],
 			'td,th' : ['rowspan', 'colspan'],
 			'div,hr,br,tbody,tr,p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : []
