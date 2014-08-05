@@ -57,6 +57,7 @@ KindEditor.lang({
 	baidumap : '百度地图',
 	lineheight : '行距',
 	clearhtml : '清理HTML代码',
+	clearimage: '清理image属性',
 	pagebreak : '插入分页符',
 	quickformat : '一键排版',
 	insertfile : '插入文件',
