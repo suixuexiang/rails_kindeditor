@@ -277,7 +277,7 @@ KindEditor.plugin('image', function(K) {
 				return false;
 			}
 		});
-		if (showRemote && tabIndex === 0) {
+		if (showLocal && tabIndex === 0) {
 			urlBox[0].focus();
 			urlBox[0].select();
 		}
