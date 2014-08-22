@@ -40,6 +40,20 @@ KindEditor.plugin('image', function(K) {
 			'<div style="padding:20px;">',
 			//tabs
 			'<div class="tabs"></div>',
+			//local upload - start
+			'<div class="tab2" style="display:none;">',
+			'<iframe name="' + target + '" style="display:none;"></iframe>',
+			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'dir=image') + '">',
+			//file
+			'<div class="ke-dialog-row">',
+			hiddenElements.join(''),
+			'<label style="width:60px;">' + lang.localUrl + '</label>',
+			'<input type="text" name="localUrl" class="ke-input-text" tabindex="-1" style="width:200px;" readonly="true" /> &nbsp;',
+			'<input type="button" class="ke-upload-button" value="' + lang.upload + '" />',
+			'</div>',
+			'</form>',
+			'</div>',
+			//local upload - end
 			//remote image - start
 			'<div class="tab1" style="display:none;">',
 			//url
@@ -71,20 +85,6 @@ KindEditor.plugin('image', function(K) {
 			'</div>',
 			'</div>',
 			//remote image - end
-			//local upload - start
-			'<div class="tab2" style="display:none;">',
-			'<iframe name="' + target + '" style="display:none;"></iframe>',
-			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'dir=image') + '">',
-			//file
-			'<div class="ke-dialog-row">',
-			hiddenElements.join(''),
-			'<label style="width:60px;">' + lang.localUrl + '</label>',
-			'<input type="text" name="localUrl" class="ke-input-text" tabindex="-1" style="width:200px;" readonly="true" /> &nbsp;',
-			'<input type="button" class="ke-upload-button" value="' + lang.upload + '" />',
-			'</div>',
-			'</form>',
-			'</div>',
-			//local upload - end
 			'</div>'
 		].join('');
 		var dialogWidth = showLocal || allowFileManager ? 450 : 400,
@@ -155,11 +155,11 @@ KindEditor.plugin('image', function(K) {
 		var urlBox = K('[name="url"]', div),
 			localUrlBox = K('[name="localUrl"]', div),
 			viewServerBtn = K('[name="viewServer"]', div),
-			widthBox = K('.tab1 [name="width"]', div),
-			heightBox = K('.tab1 [name="height"]', div),
+			widthBox = K('.tab2 [name="width"]', div),
+			heightBox = K('.tab2 [name="height"]', div),
 			refreshBtn = K('.ke-refresh-btn', div),
-			titleBox = K('.tab1 [name="title"]', div),
-			alignBox = K('.tab1 [name="align"]', div);
+			titleBox = K('.tab2 [name="title"]', div),
+			alignBox = K('.tab2 [name="align"]', div);
 
 		var tabs;
 		if (showRemote && showLocal) {
@@ -169,17 +169,17 @@ KindEditor.plugin('image', function(K) {
 			});
 			tabs.add({
 				title : lang.remoteImage,
-				panel : K('.tab1', div)
+				panel : K('.tab2', div)
 			});
 			tabs.add({
 				title : lang.localImage,
-				panel : K('.tab2', div)
+				panel : K('.tab1', div)
 			});
 			tabs.select(tabIndex);
 		} else if (showRemote) {
-			K('.tab1', div).show();
-		} else if (showLocal) {
 			K('.tab2', div).show();
+		} else if (showLocal) {
+			K('.tab1', div).show();
 		}
 
 		var uploadbutton = K.uploadbutton({
