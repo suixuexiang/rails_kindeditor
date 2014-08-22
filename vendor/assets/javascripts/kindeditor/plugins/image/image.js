@@ -155,11 +155,11 @@ KindEditor.plugin('image', function(K) {
 		var urlBox = K('[name="url"]', div),
 			localUrlBox = K('[name="localUrl"]', div),
 			viewServerBtn = K('[name="viewServer"]', div),
-			widthBox = K('.tab2 [name="width"]', div),
-			heightBox = K('.tab2 [name="height"]', div),
+			widthBox = K('.tab1 [name="width"]', div),
+			heightBox = K('.tab1 [name="height"]', div),
 			refreshBtn = K('.ke-refresh-btn', div),
-			titleBox = K('.tab2 [name="title"]', div),
-			alignBox = K('.tab2 [name="align"]', div);
+			titleBox = K('.tab1 [name="title"]', div),
+			alignBox = K('.tab1 [name="align"]', div);
 
 		var tabs;
 		if (showRemote && showLocal) {
@@ -168,18 +168,18 @@ KindEditor.plugin('image', function(K) {
 				afterSelect : function(i) {}
 			});
 			tabs.add({
-				title : lang.remoteImage,
+				title : lang.localImage,
 				panel : K('.tab2', div)
 			});
 			tabs.add({
-				title : lang.localImage,
+				title : lang.remoteImage,
 				panel : K('.tab1', div)
 			});
 			tabs.select(tabIndex);
 		} else if (showRemote) {
-			K('.tab2', div).show();
-		} else if (showLocal) {
 			K('.tab1', div).show();
+		} else if (showLocal) {
+			K('.tab2', div).show();
 		}
 
 		var uploadbutton = K.uploadbutton({
