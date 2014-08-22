@@ -294,7 +294,7 @@ KindEditor.plugin('image', function(K) {
 				imageAlign : img ? img.attr('align') : '',
 				showRemote : allowImageRemote,
 				showLocal : allowImageUpload,
-				tabIndex: img ? 0 : imageTabIndex,
+				tabIndex: img ? 1 : imageTabIndex,
 				clickFn : function(url, title, width, height, border, align) {
 					if (img) {
 						img.attr('src', url);
