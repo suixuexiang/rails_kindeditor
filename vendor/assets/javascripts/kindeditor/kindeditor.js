@@ -927,11 +927,11 @@ function _mediaAttrs(srcTag) {
   return _getAttrList(unescape(srcTag));
 }
 function _mediaEmbed(attrs) {
-  var html = '<embed ';
+  var html = '<video ';
   _each(attrs, function(key, val) {
     html += key + '="' + val + '" ';
   });
-  html += '/>';
+    html += '></video>';
   return html;
 }
 function _mediaImg(blankPath, attrs) {
