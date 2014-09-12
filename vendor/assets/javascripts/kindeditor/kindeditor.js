@@ -954,7 +954,7 @@ function _mediaImg(blankPath, attrs) {
   if (style !== '') {
     html += 'style="' + style + '" ';
   }
-  html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';
+  html += 'data-ke-tag="' + srcTag + '" alt="" />';
   return html;
 }
 function _tmpl(str, data) {
