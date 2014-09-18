@@ -81,8 +81,8 @@ KindEditor.plugin('media', function(K) {
 						].join('');
                     	var dialog = self.createDialog({
 							name : name,
-							width : dWidth,
-							height : ,
+							width : 720,
+							height : 600,
 							title : "播放视频，点击暂停选择封面",
 							body : chooseFrame,
 							yesBtn : {
