@@ -75,7 +75,7 @@ KindEditor.plugin('media', function(K) {
                         // };
                         var chooseFrame=[
 						'<div>',
-						'<h>播放视频点击暂停截取封面</h>',
+						'<h style="font-size:30px">播放视频点击暂停截取封面</h>',
 						'<video id="my_video" controls autoplay loop crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" > <source src='+url+' type="video/mp4"/></video>',
 						'<canvas id="thecanvas" style="display:none"></canvas>',
 						'</div>'
@@ -238,7 +238,7 @@ function loadmeta(){
     }
     else{
     	video.height=600;
-    	var w=video.videoWidth*600/video.videoHeight+100;
+    	var w=video.videoWidth*600/video.videoHeight+50;
     	$('.ke-dialog').attr("style","display: block; width: "+w+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
     }
 }
