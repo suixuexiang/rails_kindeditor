@@ -69,8 +69,9 @@ KindEditor.plugin('media', function(K) {
 							'</div>'
 							].join('');
 						self.hideDialog();
-                       // var video=document.createElemnt("video");
-                       // video.addEventLisener
+                       var video=document.createElement("video");
+                       video.src=url;
+                       video.onloadedmetadata=alert('loadsuccess!');
 						var dialog = self.createDialog({
 							name : name,
 							width : 720,
