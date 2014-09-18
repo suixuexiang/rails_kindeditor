@@ -239,6 +239,6 @@ function loadmeta(){
     else{
     	video.height=600;
     	var w=video.videoWidth*600/video.videoHeight+100;
-    	$('.ke-dialog').attr("style","display: block; width: "+h+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
+    	$('.ke-dialog').attr("style","display: block; width: "+w+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
     }
 }
