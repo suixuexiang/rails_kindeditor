@@ -75,7 +75,7 @@ KindEditor.plugin('media', function(K) {
                         // };
                         var chooseFrame=[
 						'<div>',
-						'<video id="my_video" controls autoplay loop width="'+dWidth+'" crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" > <source src='+url+' type="video/mp4"/></video>',
+						'<video id="my_video" controls autoplay loop crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" > <source src='+url+' type="video/mp4"/></video>',
 						'<canvas id="thecanvas" style="display:none"></canvas>',
 						'</div>'
 						].join('');
