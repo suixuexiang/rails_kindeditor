@@ -75,6 +75,7 @@ KindEditor.plugin('media', function(K) {
                         // };
                         var chooseFrame=[
 						'<div>',
+						'<h>播放视频点击暂停截取封面</h>',
 						'<video id="my_video" controls autoplay loop crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" > <source src='+url+' type="video/mp4"/></video>',
 						'<canvas id="thecanvas" style="display:none"></canvas>',
 						'</div>'
@@ -231,5 +232,13 @@ function loadmeta(){
 	var vHeight=video.videoHeight;
     var vWidth=video.videoWidth;
     video.width=vWidth>vHeight? 720 : 300;
-    $('.ke-dialog').attr("style","display: block; width: "+video.videoWidth+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
+    if(vWidth>vHeight){
+    	video.width=720;
+    	$('.ke-dialog').attr("style","display: block; width: 720px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
+    }
+    else{
+    	video.height=600;
+    	var w=video.videoWidth*600/video.videoHeight+100;
+    	$('.ke-dialog').attr("style","display: block; width: "+h+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
+    }
 }
