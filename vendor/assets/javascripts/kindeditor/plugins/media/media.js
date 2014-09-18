@@ -66,7 +66,7 @@ KindEditor.plugin('media', function(K) {
                         var video=document.createElement("video");
                         video.src=url;
                         video.onloadedmetadata=function(){
-
+                        	alert("loadsuccess");
                         	var vHeight=video.videoHeight;
                         	var vWidth=video.videoWidth;
                         	var dWidth= vWidth>vHeight? 720 : 450;
