@@ -231,4 +231,5 @@ function loadmeta(){
 	var vHeight=video.videoHeight;
     var vWidth=video.videoWidth;
     video.width=vWidth>vHeight? 720 : 300;
+    $('.ke-dialog').attr("style","display: block; width: "+video.videoWidth+"px; height: 600px; position: fixed; z-index: 811213; left: 340px; top: 56px;");
 }
