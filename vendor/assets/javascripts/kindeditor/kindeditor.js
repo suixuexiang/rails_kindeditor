@@ -3203,7 +3203,7 @@ _extend(KCmd, {
       html += 'align="' + _escape(align) + '" ';
     }
     html += 'alt="' + _escape(title) + '" ';
-    html += '/>';
+    html += '/><br/>';
     return this.inserthtml(html);
   },
   createlink : function(url, type) {
