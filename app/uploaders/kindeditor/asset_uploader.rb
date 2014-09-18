@@ -15,18 +15,18 @@ class Kindeditor::AssetUploader < CarrierWave::Uploader::Base
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-    if Kindeditor::AssetUploader.save_upload_info?
-      "#{RailsKindeditor.upload_store_dir}/#{model.asset_type.to_s.underscore.gsub(/(kindeditor\/)|(_uploader)/, '')}/#{model.created_at.strftime("%Y%m")}"
-    else
-      "#{RailsKindeditor.upload_store_dir}/#{self.class.to_s.underscore.gsub(/(kindeditor\/)|(_uploader)/, '')}/#{Time.now.strftime("%Y%m")}"
-    end
-  end
+  # def store_dir
+  #   if Kindeditor::AssetUploader.save_upload_info?
+  #     "#{RailsKindeditor.upload_store_dir}/#{model.asset_type.to_s.underscore.gsub(/(kindeditor\/)|(_uploader)/, '')}/#{model.created_at.strftime("%Y%m")}"
+  #   else
+  #     "#{RailsKindeditor.upload_store_dir}/#{self.class.to_s.underscore.gsub(/(kindeditor\/)|(_uploader)/, '')}/#{Time.now.strftime("%Y%m")}"
+  #   end
+  # end
 
   def cache_dir
     "#{Rails.root}/tmp/uploads"
@@ -69,12 +69,24 @@ class Kindeditor::AssetUploader < CarrierWave::Uploader::Base
     end
   end
 
-  def filename
-    if original_filename 
-      @name ||= Digest::MD5.hexdigest(File.dirname(current_path)).slice(0, 12)
-      "#{@name}.#{file.extension}"
-    end
-  end
+  # def filename
+  #   if original_filename 
+  #     @name ||= Digest::MD5.hexdigest(File.dirname(current_path)).slice(0, 12)
+  #     "#{@name}.#{file.extension}"
+  #   end
+  # end
+
+  storage :aliyun                       
+  def store_dir                         
+    "#{Time.now.strftime("%Y%m")}"     
+  end                                   
+                                       
+  def filename                          
+    if original_filename                
+      @name ||= Digest::MD5.hexdigest(SecureRandom.uuid.to_s)
+      "#{@name}.#{file.extension}"      
+    end                                 
+  end 
   
   def self.save_upload_info?
     begin

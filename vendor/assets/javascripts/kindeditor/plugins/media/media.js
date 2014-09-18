@@ -6,7 +6,7 @@
 * @site http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
 *******************************************************************************/
-
+var dataURL;
 KindEditor.plugin('media', function(K) {
 	var self = this, name = 'media', lang = self.lang(name + '.'),
 		allowMediaUpload = K.undef(self.allowMediaUpload, true),
@@ -27,16 +27,6 @@ KindEditor.plugin('media', function(K) {
 				'<span class="ke-button-common ke-button-outer">',
 				'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 				'</span>',
-				'</div>',
-				//width
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:60px;">' + lang.width + '</label>',
-				'<input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="550" maxlength="4" />',
-				'</div>',
-				//height
-				'<div class="ke-dialog-row">',
-				'<label for="keHeight" style="width:60px;">' + lang.height + '</label>',
-				'<input type="text" id="keHeight" class="ke-input-text ke-input-number" name="height" value="400" maxlength="4" />',
 				'</div>',
 				//autostart
 				'<div class="ke-dialog-row">',
@@ -72,15 +62,61 @@ KindEditor.plugin('media', function(K) {
 							heightBox[0].focus();
 							return;
 						}
-						var html = K.mediaImg(self.themesPath + 'common/blank.gif', {
-								src : url,
-								type : K.mediaType(url),
-								width : width,
-								height : height,
-								autostart : autostartBox[0].checked ? 'true' : 'false',
-								loop : 'true'
-							});
-						self.insertHtml(html).hideDialog().focus();
+						var chooseFrame=[
+							'<div>',
+							'<video id="my_video" controls autoplay loop width="720" crossOrigin="anonymous" onpause="pausedraw()" > <source src='+url+' type="video/mp4"/></video>',
+							'<canvas id="thecanvas" style="display:none"></canvas>',
+							'</div>'
+							].join('');
+						self.hideDialog();
+						var dialog = self.createDialog({
+							name : name,
+							width : 720,
+							height : 600,
+							title : "播放视频，点击暂停选择封面",
+							body : chooseFrame,
+							yesBtn : {
+								name : self.lang('yes'),
+								click : function(e) {
+									if (!dataURL){
+										alert('请先暂停选择封面！')
+									}
+									else{
+										$.ajax({
+											url: '/kindeditor/uploadcover',
+											type: 'post',
+											data: {imgFile: dataURL,dir:'image'},
+											dataType: 'json',
+											success: function(data){
+												var resp=data;
+												console.log(typeof(resp));
+												if (data.error==0){
+													var html = K.mediaImg(self.themesPath + 'common/blank.gif', {
+														src : '/mediaplayer.swf?file='+url,
+														url : url,
+														"data-ke-tag":url,
+														coverurl: data.url,	
+														width : 277,
+														autostart : autostartBox[0].checked ? 'true' : 'false',
+														loop : 'true'
+													});
+													var ht="<img src="+data.url+">"
+													alert(data.url);
+													self.insertHtml(html).hideDialog().focus();
+													dataURL="";
+												}
+												else{
+													alert("服务器错误，请重新截取");
+												}
+											},
+											error: function(){
+												alert("提交失败，请重新截取");
+											}
+										});
+									}
+								}
+							}
+						});
 					}
 				}
 			}),
@@ -168,3 +204,14 @@ KindEditor.plugin('media', function(K) {
 	};
 	self.clickToolbar(name, self.plugin.media.edit);
 });
+
+function pausedraw(){
+	alert('who call me!!!');
+	var video = document.getElementById('my_video');
+	var thecanvas = document.getElementById('thecanvas');
+	thecanvas.height=video.videoHeight;
+	thecanvas.width=video.videoWidth;
+	var context = thecanvas.getContext('2d');
+    context.drawImage(video, 0, 0, thecanvas.width, thecanvas.height);
+    dataURL = thecanvas.toDataURL();
+}

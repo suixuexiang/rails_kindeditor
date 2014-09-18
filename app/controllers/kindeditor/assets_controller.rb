@@ -1,7 +1,33 @@
 #coding: utf-8
 require "find"
+class CarrierStringIO < StringIO
+  def original_filename
+    # the real name does not matter
+    "cover.jpeg"
+  end
+
+  def content_type
+    # this should reflect real content type, but for this example it's ok
+    "image/jpeg"
+  end
+end
 class Kindeditor::AssetsController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  
+  def uploadcover
+    @imgFile, @dir = params[:imgFile], params[:dir]
+    @imgFile = CarrierStringIO.new(Base64.decode64(params[:imgFile]['data:image/png;base64,'.length .. -1]))
+    begin
+      uploader = "Kindeditor::#{@dir.camelize}Uploader".constantize.new
+      uploader.store!(@imgFile)
+      render :text => ({:error => 0, :url => uploader.url}.to_json)
+    rescue CarrierWave::UploadError => e
+      show_error(e.message)
+    rescue Exception => e
+      show_error(e.to_s)
+    end
+  end
+
   def create
     @imgFile, @dir = params[:imgFile], params[:dir]
     unless @imgFile.nil?

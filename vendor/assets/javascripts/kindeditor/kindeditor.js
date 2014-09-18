@@ -927,12 +927,13 @@ function _mediaAttrs(srcTag) {
   return _getAttrList(unescape(srcTag));
 }
 function _mediaEmbed(attrs) {
-  var html = '<video ';
+  var html = '<embed ';
   _each(attrs, function(key, val) {
     html += key + '="' + val + '" ';
   });
-    html += '></video>';
+    html += ' ></embed>' ;
   return html;
+  
 }
 function _mediaImg(blankPath, attrs) {
   var width = attrs.width,
@@ -955,7 +956,7 @@ function _mediaImg(blankPath, attrs) {
     html += 'style="' + style + '" ';
   }
   html += 'data-ke-tag="' + srcTag + '" alt="" />';
-  return html;
+  return srcTag;
 }
 function _tmpl(str, data) {
   var fn = new Function("obj",
@@ -1768,6 +1769,7 @@ K = function(expr, root) {
       var doc = root ? root.ownerDocument || root : document,
         div = doc.createElement('div'), list = [];
       div.innerHTML = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + expr;
+      var k= div.innerHTML;
       for (var i = 0, len = div.childNodes.length; i < len; i++) {
         var child = div.childNodes[i];
         if (child.id == '__kindeditor_temp_tag__') {
@@ -5181,7 +5183,7 @@ KEditor.prototype = {
   text : function(val) {
     var self = this;
     if (val === undefined) {
-      return _trim(self.html().replace(/<(?!img|embed).*?>/ig, '').replace(/&nbsp;/ig, ' '));
+      return _trim(self.html().replace(/<(?!img|embed|video).*?>/ig, '').replace(/&nbsp;/ig, ' '));
     } else {
       return self.html(_escape(val));
     }
@@ -5204,7 +5206,7 @@ KEditor.prototype = {
       return self.html().length;
     }
     if (mode === 'text') {
-      return self.text().replace(/<(?:img|embed).*?>/ig, 'K').replace(/\r\n|\n|\r/g, '').length;
+      return self.text().replace(/<(?:img|embed|video).*?>/ig, 'K').replace(/\r\n|\n|\r/g, '').length;
     }
     return 0;
   },
