@@ -62,64 +62,71 @@ KindEditor.plugin('media', function(K) {
 							heightBox[0].focus();
 							return;
 						}
-						var chooseFrame=[
+						self.hideDialog();
+                        var video=document.createElement("video");
+                        video.src=url;
+                        video.onloadedmetadata=function(){
+
+                        	var vHeight=video.videoHeight;
+                        	var vWidth=video.videoWidth;
+                        	var dWidth= vWidth>vHeight? 720 : 450;
+                        	var dHeight= vWidth>vHeight? 600 : 600;
+                        	var chooseFrame=[
 							'<div>',
-							'<video id="my_video" controls autoplay loop width="720" crossOrigin="anonymous" onpause="pausedraw()" > <source src='+url+' type="video/mp4"/></video>',
+							'<video id="my_video" controls autoplay loop width="'+dWidth+'" crossOrigin="anonymous" onpause="pausedraw()" > <source src='+url+' type="video/mp4"/></video>',
 							'<canvas id="thecanvas" style="display:none"></canvas>',
 							'</div>'
 							].join('');
-						self.hideDialog();
-                       var video=document.createElement("video");
-                       video.src=url;
-                       video.onloadedmetadata=alert('loadsuccess!');
-						var dialog = self.createDialog({
-							name : name,
-							width : 720,
-							height : 600,
-							title : "播放视频，点击暂停选择封面",
-							body : chooseFrame,
-							yesBtn : {
-								name : self.lang('yes'),
-								click : function(e) {
-									if (!dataURL){
-										alert('请先暂停选择封面！')
-									}
-									else{
-										$.ajax({
-											url: '/kindeditor/uploadcover',
-											type: 'post',
-											data: {imgFile: dataURL,dir:'image'},
-											dataType: 'json',
-											success: function(data){
-												var resp=data;
-												console.log(typeof(resp));
-												if (data.error==0){
-													var html = K.mediaImg(self.themesPath + 'common/blank.gif', {
-														src : '/mediaplayer.swf?file='+url,
-														url : url,
-														"data-ke-tag":url,
-														coverurl: data.url,	
-														width : 277,
-														autostart : autostartBox[0].checked ? 'true' : 'false',
-														loop : 'true'
-													});
-													var ht="<img src="+data.url+">"
-													alert(data.url);
-													self.insertHtml(html).hideDialog().focus();
-													dataURL="";
+                        	var dialog = self.createDialog({
+								name : name,
+								width : dWidth,
+								height : dHeight,
+								title : "播放视频，点击暂停选择封面",
+								body : chooseFrame,
+								yesBtn : {
+									name : self.lang('yes'),
+									click : function(e) {
+										if (!dataURL){
+											alert('请先暂停选择封面！')
+										}
+										else{
+											$.ajax({
+												url: '/kindeditor/uploadcover',
+												type: 'post',
+												data: {imgFile: dataURL,dir:'image'},
+												dataType: 'json',
+												success: function(data){
+													var resp=data;
+													console.log(typeof(resp));
+													if (data.error==0){
+														var html = K.mediaImg(self.themesPath + 'common/blank.gif', {
+															src : '/mediaplayer.swf?file='+url,
+															url : url,
+															"data-ke-tag":url,
+															coverurl: data.url,	
+															width : 277,
+															autostart : autostartBox[0].checked ? 'true' : 'false',
+															loop : 'true'
+														});
+														var ht="<img src="+data.url+">"
+														alert(data.url);
+														self.insertHtml(html).hideDialog().focus();
+														dataURL="";
+													}
+													else{
+														alert("服务器错误，请重新截取");
+													}
+												},
+												error: function(){
+													alert("提交失败，请重新截取");
 												}
-												else{
-													alert("服务器错误，请重新截取");
-												}
-											},
-											error: function(){
-												alert("提交失败，请重新截取");
-											}
-										});
+											});
+										}
 									}
 								}
-							}
-						});
+							});
+                        };
+						
 					}
 				}
 			}),
