@@ -76,7 +76,7 @@ KindEditor.plugin('media', function(K) {
                         var chooseFrame=[
 						'<div>',
 						'<h style="font-size:30px">播放视频点击暂停截取封面</h>',
-						'<video id="my_video" controls autoplay loop crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" > <source src='+url+' type="video/mp4"/></video>',
+						'<video id="my_video" controls autoplay loop crossOrigin="anonymous" onpause="pausedraw()" onloadedmetadata="loadmeta()" type="video/mp4" > <source src='+url+' type="video/mp4"/></video>',
 						'<canvas id="thecanvas" style="display:none"></canvas>',
 						'</div>'
 						].join('');
@@ -218,7 +218,7 @@ KindEditor.plugin('media', function(K) {
 });
 
 function pausedraw(){
-	alert('who call me!!!');
+	// alert('who call me!!!');
 	var video = document.getElementById('my_video');
 	var thecanvas = document.getElementById('thecanvas');
 	thecanvas.height=video.videoHeight;
