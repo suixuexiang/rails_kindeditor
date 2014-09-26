@@ -225,7 +225,7 @@ function pausedraw(){
 	thecanvas.width=video.videoWidth;
 	var context = thecanvas.getContext('2d');
     context.drawImage(video, 0, 0, thecanvas.width, thecanvas.height);
-    dataURL = thecanvas.toDataURL();
+    dataURL = thecanvas.toDataURL('image/jpeg');
 }
 function loadmeta(){
 	var video = document.getElementById('my_video');
