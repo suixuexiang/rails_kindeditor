@@ -14,7 +14,7 @@ class Kindeditor::ImageUploader < Kindeditor::AssetUploader
   def image_ratio(file)
     if file
       image = MiniMagick::Image.open(file.path)
-      "ratio#{image['width']/image['height']}_"
+      "ratio#{(image['width'].to_f/image['height'].to_f).round(3)}_"
     end
   end
 
